@@ -80,9 +80,7 @@
       for (let time of custom_gray_mode_time_list) {
         let type = time.realNode.time_span;
         let desc = time.realNode.time_span_desc;
-        if (gray_mode_time_list.indexOf(type) === -1) {
-          gray_mode_time_list.push({time: type, desc: desc});
-        }
+        gray_mode_time_list.push({time: type, desc: desc});
       }
     }
     DreamConfig["gray_mode_time_list"] = gray_mode_time_list;
@@ -123,6 +121,16 @@
     /** 安全链接配置 */
     DreamConfig["enable_security_link"] = [[${theme.config.security_link_config.enable_security_link}]];
     DreamConfig["security_link_url"] = [[${theme.config.security_link_config.security_link_url}]];
+    let whitelistStr = [[${theme.config.security_link_config.whitelist_domains}]];
+    let hostname = window.location.hostname;
+    if (whitelistStr) {
+      DreamConfig['security_link_whitelist'] = whitelistStr.split('\n').map(domain => domain.toLowerCase().trim()).filter(domain => domain.length > 0);
+      if(DreamConfig['security_link_whitelist'].indexOf(hostname) === -1) {
+        DreamConfig['security_link_whitelist'].push(hostname);
+      }
+    } else {
+      DreamConfig['security_link_whitelist'] = [hostname];
+    }
 
     DreamConfig["theme_version"] = [[${theme.spec.version}]];
     DreamConfig["site_comment"] = [[${site.comment.enable}]];

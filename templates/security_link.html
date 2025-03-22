@@ -2,16 +2,24 @@
 <html lang="zh" xmlns:th="https://www.thymeleaf.org"
       th:class="${theme.config.basic_style.theme_style}"
       th:with="urlCode = ${param.target},
-               url = ${#uris.unescapePath(urlCode)},
+               url = ${#strings.defaultString(#uris.unescapePath(urlCode), '/')},
                title = ${singlePage.spec.title} + ' - ' + ${site.title},
                contributor = ${contributorFinder.getContributor(theme.config.basic_info.metadata_name)},
                enableComment = false, isPost = false, canonical = ${theme.config.security_link_config.security_link_url}">
 <head>
+<<<<<<< HEAD
+=======
+    <meta charset="utf-8"/>
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="robots" content="noindex, nofollow"/>
+<<<<<<< HEAD
     <title th:with="t = ${theme.config.security_link_config.security_link_site_title1},
+=======
+    <title th:with="t = ${theme.config.security_link_config.security_link_page_title},
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
     t1 = ${#strings.replace(t, '{title}', site.title)}"
     th:text="${#strings.isEmpty(t) ? site.title + '-安全中心' : t1}">
     </title>
@@ -125,6 +133,13 @@
             background-color: #abedd8;
         }
 
+<<<<<<< HEAD
+=======
+        .font-color {
+            color: #abedd8;
+        }
+
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
         html.dark .loading {
             background: #393e46;
             box-shadow: 0 4px 8px rgba(100, 100, 100, 0.1);
@@ -248,6 +263,7 @@
             box-shadow: 0 6px 20px rgba(63, 193, 201, 0.4);
         }
 
+<<<<<<< HEAD
         .progress-bar {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
@@ -259,6 +275,8 @@
             box-shadow: 0 0 10px rgba(171, 237, 216, 0.5);
         }
 
+=======
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
         .content-title {
             margin-bottom: 20px;
             font-size: 20px;
@@ -275,6 +293,10 @@
 
         .others-topic {
             margin-bottom: 10px;
+<<<<<<< HEAD
+=======
+            line-height: 1.2rem;
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
             font-size: 16px;
             letter-spacing: 1px;
             color: #333;
@@ -330,6 +352,15 @@
             background-color: #abedd8;
             transition: width [[${theme.config.security_link_config.security_link_auto_jump_time}]]s linear;
         }
+<<<<<<< HEAD
+=======
+
+        .progress-end {
+            width: 100% !important;
+            transition: none !important;
+        }
+
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
         .countdown-text {
             margin-top: 12px;
             font-size: 12px;
@@ -339,6 +370,22 @@
         html.dark .countdown-text {
             color: #EFEFEF;
         }
+<<<<<<< HEAD
+=======
+
+        #countdown {
+          font-weight: bold;
+        }
+
+        html.dark #countdown {
+            color: #3fc1c9;
+        }
+
+        html.light #countdown {
+            color: #26a1a6;
+        }
+
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
     </style>
 </head>
 <body>
@@ -353,41 +400,100 @@
         <div class="others">
             <div class="others-tip" th:utext="${#strings.defaultString(theme.config.security_link_config.security_link_tip_desc, '请注意您的账号和财产安全！')}">
             </div>
+<<<<<<< HEAD
             <div class="others-topic" th:with="oDesc = ${theme.config.security_link_config.security_link_jump_desc},
                                            o1 = ${#strings.replace(oDesc, '{title}', site.title)},
                                            o2 = ${#strings.replace(o1, '{url}', url)}" th:utext="${o2}">
+=======
+            <div class="others-topic">
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
             </div>
             <div class="progress-bar">
                 <div class="progress"></div>
             </div>
             <div class="countdown-text">
+<<<<<<< HEAD
                 ⚡将在<span id="countdown">[[${theme.config.security_link_config.security_link_auto_jump_time}]]</span>秒后跳转，请自行确认链接安全性
             </div>
             <div class="others-end">
                 <a th:href="${url}" target="_self">继续访问</a>
+=======
+                ⚡将在 <span id="countdown">[[${theme.config.security_link_config.security_link_auto_jump_time}]]</span> 秒后跳转，请自行确认链接安全性
+            </div>
+            <div class="others-end">
+                <a target="_self" href="/">继续访问</a>
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
             </div>
         </div>
     </div>
     <script>
         window.onload = function() {
+<<<<<<< HEAD
           let countdown = [[${theme.config.security_link_config.security_link_auto_jump_time}]]
           if (countdown > 0) {
             document.querySelector('.progress').style.width = '100%'
             const countdownElement = document.getElementById('countdown')
             const timer = setInterval(function () {
+=======
+          //处理跳转链接，若链接不合法则跳转到首页
+          const siteTitle = '[[${site.title}]]'
+          let link_jump_desc = '[(${theme.config.security_link_config.security_link_jump_desc})]'
+          let targetUrl = '[[${url}]]'
+          //校验链接是否合法
+          try {
+            let tUrl = new URL(targetUrl)
+          } catch (e) {
+            // URL解析失败，返回首页
+            targetUrl = '/'
+          }
+          // 使用正则表达式进行全局替换
+          link_jump_desc = link_jump_desc.replace(new RegExp('{title}', 'g'), siteTitle);
+          link_jump_desc = link_jump_desc.replace(new RegExp('{url}', 'g'), targetUrl);
+          document.querySelector('.others-topic').innerHTML = link_jump_desc
+          document.querySelector('.others-end a').setAttribute('href', targetUrl);
+
+          // 倒计时
+          let timer
+          let countdownElement
+          let countdown = [[${theme.config.security_link_config.security_link_auto_jump_time}]]
+          if (countdown > 0) {
+            document.querySelector('.progress').style.width = '100%'
+            countdownElement = document.getElementById('countdown')
+            timer = setInterval(function () {
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
               countdown--
               countdownElement.textContent = countdown
               if (countdown <= 0) {
                 clearInterval(timer)
+<<<<<<< HEAD
                 window.location.href = '[[${url}]]'
+=======
+                window.location.replace(targetUrl);
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
               }
             }, 1000)
           } else {
             document.querySelector('.progress-bar').style.display = 'none';
             document.querySelector('.countdown-text').style.display = 'none';
           }
+<<<<<<< HEAD
 
           /** 配置主题模式 */
+=======
+          // 继续访问，不记录历史，避免返回此页面
+          document.querySelector('.others-end a').addEventListener('click', function (e) {
+            e.preventDefault()
+            if (timer) {
+              clearInterval(timer)
+            }
+            window.location.replace(targetUrl)
+            if (countdownElement) {
+              countdownElement.textContent = 0
+            }
+            document.querySelector('.progress-bar > .progress').classList.add('progress-end')
+          })
+          /* 配置主题模式 */
+>>>>>>> 868f9212810b3bc5b24097ee0a51ac7a129aa1fe
           let default_theme = '[[${theme.config.basic_style.default_theme}]]';
           const hasNightInLocal = () => localStorage.getItem('night') !== null;
           const getNightInConfig = () => {
